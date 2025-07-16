@@ -1,0 +1,54 @@
+/* cart-styles.css */
+
+/* Main container for all items in the cart */
+#cartItems {
+    /* Add any specific container styles here if needed */
+}
+
+/* Each row in the cart, representing one product */
+.cart-item-row {
+    display: grid;
+    grid-template-columns: 1fr auto; /* Column 1 for text (expands), Column 2 for button (fixed) */
+    gap: 1rem; /* Creates space between the text and the button */
+    align-items: center; /* Vertically aligns the text and button */
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* The div containing the product name and price */
+.cart-item-details {
+    /* No specific styles needed here as the grid handles the layout */
+}
+
+.cart-item-details p {
+    margin: 0;
+}
+
+.cart-item-details p:first-child {
+    font-weight: bold;
+}
+
+.cart-item-details p:last-child {
+    color: #666;
+}
+
+/* The remove button ('x') */
+.remove-item-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px; /* Ensures consistent size */
+    line-height: 1;  /* Ensures consistent height */
+}
+
+/* Total amount display */
+.cart-total {
+    text-align: right;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}

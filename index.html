@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrepaCats - Rascadores y Trepadores para Gatos | Líderes en Uruguay</title>
+    <meta name="description" content="TrepaCats es líder uruguayo en fabricación de rascadores, trepadores y esquineros para gatos. Protege tus muebles con nuestros productos de alta calidad y descubre la raza de tu gato con nuestra IA.">
+    <meta name="keywords" content="rascadores gatos, trepadores gatos, esquineros gatos, identificador de razas de gatos, IA para gatos, accesorios gatos Uruguay, TrepaCats">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="TrepaCats - Rascadores, Trepadores e Identificador de Razas con IA">
+    <meta property="og:description" content="Líder uruguayo en fabricación de productos para gatos. Calidad garantizada.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://trepacats.com.uy">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <!-- Custom Cart Styles -->
+    <link rel="stylesheet" href="cart-styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ff6600;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo img {
+            max-height: 60px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            margin-top: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ff6600;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.8);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6600;
+            opacity: 0;
+            transition: width 0.3s, opacity 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            color: white;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 30px rgba(255, 102, 0, 0.5); }
+            to { text-shadow: 0 0 40px rgba(255, 102, 0, 0.8), 0 0 50px rgba(255, 102, 0, 0.6); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6600, #ff8533);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 102, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 102, 0, 0.5);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 102, 0, 0.2);
+        }
+
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-info p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6600;
+            margin-bottom: 1rem;
+        }
+
+        .product-button {
+            background: linear-gradient(45deg, #ff6600, #ff8533);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .product-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 0;
+            background: #fff;
+            text-align: center;
+        }
+
+        .gallery h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .gallery-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            aspect-ratio: 16 / 9;
+        }
+
+        .gallery-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .gallery-image.active {
+            opacity: 1;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #ff6600;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .feature {
+            background: rgba(255, 102, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 102, 0, 0.3);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: #ff6600;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .contact h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info h3 {
+            color: #ff6600;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item i {
+            color: #ff6600;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* IA Identifier Section */
+        .ia-identifier {
+            padding: 80px 0;
+            background: #f8f9fa;
+            text-align: center;
+        }
+        .ia-identifier h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        .ia-content {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        #catImageUpload {
+            display: block;
+            margin: 0 auto 1.5rem;
+            border: 2px dashed #ff6600;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #identifyBreedBtn {
+            background: linear-gradient(45deg, #ff6600, #ff8533);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        #identifyBreedBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+        }
+        #identifyBreedBtn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #breedResult {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f0f0f0;
+            border-radius: 10px;
+            min-height: 50px;
+            text-align: left;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff6600;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none; /* Hidden by default */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Social Media Section */
+        .social-media {
+            background: #000;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .social-media h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff6600, #ff8533);
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            margin: 0 5px;
+        }
+
+        .social-links a svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 102, 0, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: #000000;
+            color: #aaa;
+            text-align: center;
+            padding: 2rem 0;
+           
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .products-grid, .about-content, .contact-content { grid-template-columns: 1fr; }
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <a href="#inicio"><img src="/Users/lautaroparodi/Documents/Pagina web TrepaCats V2/Imagenes/logo.png" alt="Logo de TrepaCats"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#galeria">Clientes</a></li>
+                <li><a href="#ia-identifier">Identificador r</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button id="cartButton" style="display: none; background: #ff6600; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                <i class="fas fa-shopping-cart"></i> Mi Carrito
+            </button>
+        </nav>
+    </header>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" style="display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7);">
+        <div style="background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem;">
+                <h2 style="margin: 0; font-size: 1.5rem;">Mi Carrito</h2>
+                <span id="closeModalBtn" style="color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 1;">&times;</span>
+            </div>
+            <div id="cartItems">
+                <p>No hay productos en el carrito.</p>
+            </div>
+            <button id="checkoutButton" style="background: #ff6600; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 20px; width: 100%; font-size: 1.1rem;">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-slideshow">
+            <img src="/Users/lautaroparodi/Documents/Pagina web TrepaCats V2/Imagenes/section 1.jpg" alt="Gato en un rascador TrepaCats" class="hero-slide active">
+            <img src="/Users/lautaroparodi/Documents/Pagina web TrepaCats V2/Imagenes/section 2.jpg" alt="Gato jugando en un trepador" class="hero-slide">
+            <img src="/Users/lautaroparodi/Documents/Pagina web TrepaCats V2/Imagenes/section 3.jpg" alt="Gatito en un producto TrepaCats" class="hero-slide">
+        </div>
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>TrepaCats</h1>
+                <p>Líderes uruguayos en fabricación de rascadores, trepadores y esquineros para gatos. Protege tus muebles mientras tu gato disfruta al máximo.</p>
+                <a href="#productos" class="cta-button">Ver Productos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productos" class="products">
+        <div class="container">
+            <h2>Nuestros Productos</h2>
+            <div class="products-grid">
+                <!-- Product cards are generated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galeria" class="gallery">
+        <div class="container">
+            <h2>Nuestros Clientes Felices</h2>
+            <div class="gallery-container">
+                <img src="/Users/lautaroparodi/Documents/Pagina web TrepaCats V2/Imagenes/section 1.jpg" alt="Gato feliz usando productos TrepaCats" class="gallery-image active">
+                <img src="/Users/lautaroparodi/Documents/Pagina web TrepaCats V2/Imagenes/section 2.jpg" alt="Otro gato feliz" class="gallery-image">
+                <img src="/Users/lautaroparodi/Documents/Pagina web TrepaCats V2/Imagenes/section 3.jpg" alt="Un gatito jugando" class="gallery-image">
+            </div>
+        </div>
+    </section>
+    
+    <!-- IA Identifier Section -->
+    <section id="ia-identifier" class="ia-identifier">
+        <div class="container">
+            <h2>¿Qué raza es tu gato? ¡Descúbrelo aqui!</h2>
+            <div class="ia-content">
+                <p style="color: #666; margin-bottom: 1.5rem;">Sube una foto de tu gato y nuestra inteligencia artificial intentará identificar su raza.</p>
+                <input type="file" id="catImageUpload" accept="image/*">
+                <button id="identifyBreedBtn">Identificar Raza</button>
+                <div class="loader" id="loader"></div>
+                <div id="breedResult">
+                    <p>El resultado aparecerá aquí.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="about">
+        <div class="container">
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <h2>Sobre TrepaCats</h2>
+                    <p>Somos una empresa uruguaya líder en la fabricación de productos para gatos. Con años de experiencia, nos especializamos en crear rascadores, trepadores y esquineros de la más alta calidad.</p>
+                    <p>Nuestro compromiso es brindar productos que no solo satisfagan las necesidades naturales de tu gato, sino que también protejan tus muebles y se integren perfectamente en tu hogar.</p>
+                </div>
+                <div class="about-features">
+                    <div class="feature">
+                        <i class="fas fa-award"></i>
+                        <h3>Calidad Premium</h3>
+                        <p>Materiales de primera calidad</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-heart"></i>
+                        <h3>Amor por los Gatos</h3>
+                        <p>Diseñado con cariño</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-truck"></i>
+                        <h3>Envío Rápido</h3>
+                        <p>Delivery en todo Uruguay</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-tools"></i>
+                        <h3>Fabricación Local</h3>
+                        <p>Hecho en Uruguay</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2>Contacto</h2>
+            <div class="contact-content">
+                <div class="contact-info fade-in">
+                    <h3>Información de Contacto</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+598 99 123 456</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@trepacats.com.uy</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Montevideo, Uruguay</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Lun-Vie: 9:00-18:00</span>
+                    </div>
+                </div>
+                <div class="contact-info fade-in">
+                    <h3>¿Por qué elegirnos?</h3>
+                    <p>✓ Líderes en el mercado uruguayo</p>
+                    <p>✓ Productos fabricados con materiales premium</p>
+                    <p>✓ Diseños funcionales y estéticos</p>
+                    <p>✓ Envío gratuito en compras superiores a $3000</p>
+                    <p>✓ Garantía de satisfacción del cliente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="social-media">
+        <div class="container">
+            <h3>Síguenos en Redes Sociales</h3>
+            <div class="social-links">
+                <a href="#" target="_blank" aria-label="Facebook" title="Síguenos en Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="#" target="_blank" aria-label="Instagram" title="Síguenos en Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                <a href="#" target="_blank" aria-label="WhatsApp" title="Contáctanos por WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488z"/></svg></a>
+                <a href="#" target="_blank" aria-label="Twitter" title="Síguenos en Twitter"><svg viewBox="0 0 24 24"><path d="T23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.178-1.559-3.594-1.559-3.225 0-5.568 3.075-4.797 6.198C7.691 8.094 4.066 6.13 1.64 3.161c-.423.725-.666 1.564-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.247-2.228-.616v0c0 .023 0 .045 0 .068 0 2.385 1.693 4.374 3.946 4.826-.413.111-.849.171-1.296.171-.316 0-.623-.03-.923-.086a4.48 4.48 0 004.19 3.113A8.96 8.96 0 010 19c2 .001 3 .001 5 .001a12.7 12.7 0 007-2c2 .001 3 .001 5 .001a12 .12z"/></svg></a>
+                <a href="#" target="_blank" aria-label="LinkedIn" title="Síguenos en LinkedIn"><svg viewBox="0 0 24 24"><path d="M19.5 0h-15C2.014 0 0 2.014 0 4.5v15C0 21.986 2.014 24 4.5 24h15c2.486 0 4.5-2.014 4.5-4.5v-15C24 2.014 21.986 0 19.5 0zm-11.25 20h-3v-10h3v10zm-1.5-11.5c-.966 0-1.75-.784-1.75-1.75S6.784 5 7.75 5s1.75.784 1.75 1.75S8.966 8.5 7.75 8.5zm15 11.5h-3v-5.5c0-1.378-.028-3.154-1.923-3.154-1.924 0-2.224 1.5-2.224 3.054v5.6h-3v-10h2.88v1.4h.042c.4-.758 1.378-1.558 2.84-1.558 3.036 0 3.6 2.002 3.6 4.6v5.558z"/></svg></a>
+                <a href="#" target="_blank" aria-label="YouTube" title="Síguenos en YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186c-.273-1.016-1.086-1.8-2.086-1.8-2.75-.002-5.5-.002-8.25-.002-2.75 0-5.5 0-8.25.002-1 .002-1.813.784-2.086 1.8-.273 1.016-.273 2.5-.273 4.5s0 3.484.273 4.5c.273 1.016 1.086 1.8 2.086 1.8 2.75.002 5.5.002 8.25.002 2.75 0 5.5 0 8.25-.002 1 0 1.813-.784 2.086-1.8.273-1.016.273-2.5.273-4.5s0-3.484-.273-4.5zm-14.998 9.814V8.999l8.25 3.999-8.25 3.999z"/></svg></a>
+                <a href="#" target="_blank" aria-label="TikTok" title="Síguenos en TikTok"><svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12 0 5.991 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073c0-6.627-5.373-12-12-12z"/></svg></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TrepaCats. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- MOCK DATA ---
+            const productsData = [
+                { name: "Rascador Clásico", desc: "Rascador tradicional de alta calidad.", price: 2500, image: "https://placehold.co/400x250/ff6600/ffffff?text=Rascador" },
+                { name: "Trepador Deluxe", desc: "Trepador multi-nivel con plataformas.", price: 4800, image: "https://placehold.co/400x250/ff7711/ffffff?text=Trepador" },
+                { name: "Esquinero Protector", desc: "Protege tus sillones con nuestro esquinero.", price: 1800, image: "https://placehold.co/400x250/ff8822/ffffff?text=Esquinero" },
+                { name: "Trepador Gigante", desc: "Ideal para hogares con múltiples gatos.", price: 7200, image: "https://placehold.co/400x250/ff9933/ffffff?text=Gigante" },
+            ];
+
+            // --- DOM ELEMENTS ---
+            const productsGrid = document.querySelector('.products-grid');
+            const cartButton = document.getElementById('cartButton');
+            const cartModal = document.getElementById('cartModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cartItemsContainer = document.getElementById('cartItems');
+            const checkoutButton = document.getElementById('checkoutButton');
+            const catImageUpload = document.getElementById('catImageUpload');
+            const identifyBreedBtn = document.getElementById('identifyBreedBtn');
+            const breedResult = document.getElementById('breedResult');
+            const loader = document.getElementById('loader');
+            let cart = [];
+
+            // --- FUNCTIONS ---
+
+            function renderProducts() {
+                productsGrid.innerHTML = '';
+                productsData.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card fade-in';
+                    card.innerHTML = `
+                        <div class="product-image"><img src="${product.image}" alt="${product.name}"></div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3><p>${product.desc}</p>
+                            <div class="product-price">$${product.price.toLocaleString()}</div>
+                            <button class="product-button">Agregar al Carrito</button>
+                        </div>`;
+                    productsGrid.appendChild(card);
+                });
+            }
+            
+            function updateCartModal() {
+                cartItemsContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+                    cartButton.style.display = 'none';
+                    return;
+                }
+                let total = 0;
+                cart.forEach((item, index) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item-row'; 
+                    const itemPrice = item.price * item.quantity;
+                    total += itemPrice;
+                    itemElement.innerHTML = `
+                        <div class="cart-item-details">
+                            <p>${item.name} (x${item.quantity})</p><p>$${itemPrice.toLocaleString()}</p>
+                        </div>
+                        <button class="remove-item-btn" data-index="${index}"><i class="fas fa-times"></i></button>`;
+                    cartItemsContainer.appendChild(itemElement);
+                });
+                const totalElement = document.createElement('div');
+                totalElement.className = 'cart-total';
+                totalElement.innerHTML = `Total: $${total.toLocaleString()}`;
+                cartItemsContainer.appendChild(totalElement);
+            }
+
+            function addToCart(name, price) {
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name, price, quantity: 1 });
+                }
+                cartButton.style.display = 'inline-block';
+                updateCartModal();
+            }
+
+            // --- GEMINI API FUNCTION ---
+            async function identifyCatBreed(base64ImageData) {
+                loader.style.display = 'block';
+                identifyBreedBtn.disabled = true;
+                breedResult.innerHTML = '';
+
+                const apiKey = ""; // Leave empty, handled by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{
+                        role: "user",
+                        parts: [
+                            { text: "Por favor, identifica la raza de este gato. Si no estás seguro, menciona las razas más probables. Responde en español en un párrafo corto y amigable." },
+                            { inlineData: { mimeType: "image/jpeg", data: base64ImageData } }
+                        ]
+                    }]
+                };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Error de la API: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.candidates && result.candidates.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        breedResult.innerHTML = `<p>${text}</p>`;
+                    } else {
+                        breedResult.innerHTML = '<p>No se pudo identificar la raza. Por favor, intenta con otra imagen.</p>';
+                    }
+                } catch (error) {
+                    console.error("Error al llamar a la API de Gemini:", error);
+                    breedResult.innerHTML = '<p>Ocurrió un error al procesar la imagen. Inténtalo de nuevo más tarde.</p>';
+                } finally {
+                    loader.style.display = 'none';
+                    identifyBreedBtn.disabled = false;
+                }
+            }
+
+            // --- EVENT LISTENERS ---
+
+            productsGrid.addEventListener('click', function(e) {
+                if (e.target.classList.contains('product-button')) {
+                    const card = e.target.closest('.product-card');
+                    const name = card.querySelector('h3').innerText;
+                    const priceString = card.querySelector('.product-price').innerText;
+                    const price = parseInt(priceString.replace(/\D/g, ''));
+                    addToCart(name, price);
+                    e.target.innerHTML = '<i class="fas fa-check"></i> Agregado';
+                    e.target.style.background = '#28a745';
+                    setTimeout(() => {
+                        e.target.innerHTML = 'Agregar al Carrito';
+                        e.target.style.background = 'linear-gradient(45deg, #ff6600, #ff8533)';
+                    }, 2000);
+                }
+            });
+
+            cartItemsContainer.addEventListener('click', function(e) {
+                const removeButton = e.target.closest('.remove-item-btn');
+                if (removeButton) {
+                    const indexToRemove = parseInt(removeButton.getAttribute('data-index'));
+                    cart.splice(indexToRemove, 1);
+                    updateCartModal();
+                }
+            });
+
+            cartButton.addEventListener('click', () => cartModal.style.display = 'block');
+            closeModalBtn.addEventListener('click', () => cartModal.style.display = 'none');
+            window.addEventListener('click', (event) => {
+                if (event.target == cartModal) cartModal.style.display = 'none';
+            });
+            
+            checkoutButton.addEventListener('click', function() {
+                alert(cart.length > 0 ? `Procediendo al pago.` : 'El carrito está vacío.');
+            });
+
+            identifyBreedBtn.addEventListener('click', () => {
+                const file = catImageUpload.files[0];
+                if (!file) {
+                    alert("Por favor, selecciona una imagen primero.");
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+                    identifyCatBreed(base64String);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // --- INITIALIZATION ---
+            renderProducts();
+            updateCartModal();
+            
+            function initializeSlideshow(selector, interval) {
+                const slides = document.querySelectorAll(selector);
+                if (slides.length === 0) return;
+                let currentIndex = 0;
+                setInterval(() => {
+                    slides[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    slides[currentIndex].classList.add('active');
+                }, interval);
+            }
+            initializeSlideshow('.hero-slide', 5000);
+            initializeSlideshow('.gallery-image', 3000);
+        });
+    </script>
+</body>
+</html>
